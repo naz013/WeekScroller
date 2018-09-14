@@ -29,8 +29,14 @@ public class MainActivity extends AppCompatActivity {
         });
         weekScroller.setDateSelectListener(new WeekScroller.DateSelectListener() {
             @Override
-            public void onDateSelected(@NonNull DateTime dateTime) {
-                Log.d(TAG, "onDateSelected: " + dateTime);
+            public void onDateSelected(int year, int month, int day) {
+                Log.d(TAG, "onDateSelected: " + year + "/" + month + "/" + day);
+            }
+        });
+        weekScroller.setDateTimeSelectListener(new WeekScroller.DateTimeSelectListener() {
+            @Override
+            public void onDateTimeSelected(@NonNull DateTime dateTime) {
+                Log.d(TAG, "onDateTimeSelected: " + dateTime);
             }
         });
     }

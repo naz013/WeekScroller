@@ -44,6 +44,8 @@ public final class WeekScroller extends RecyclerView {
     @Nullable
     private DateSelectListener dateSelectListener;
     @Nullable
+    private DateTimeSelectListener dateTimeSelectListener;
+    @Nullable
     private DateRangeChangeListener dateRangeChangeListener;
 
     public WeekScroller(@NonNull Context context) {
@@ -123,6 +125,15 @@ public final class WeekScroller extends RecyclerView {
         this.dateRangeChangeListener = dateRangeChangeListener;
     }
 
+    public void setDateTimeSelectListener(@Nullable DateTimeSelectListener dateTimeSelectListener) {
+        this.dateTimeSelectListener = dateTimeSelectListener;
+    }
+
+    @Nullable
+    public DateTimeSelectListener getDateTimeSelectListener() {
+        return dateTimeSelectListener;
+    }
+
     public void setCurrentDate(@NonNull DateTime dateTime) {
         this.mCurrentDate = dateTime;
         initScroller(mCurrentWeek.getStart());
@@ -163,6 +174,28 @@ public final class WeekScroller extends RecyclerView {
         invalidate();
     }
 
+    /**
+     * Jump to specified date.
+     * @param year year.
+     * @param month month (1-12).
+     * @param day day.
+     */
+    public void setSelectedDate(int year, int month, int day) {
+        if (year == 0 || day == 0) {
+            initScroller(mCurrentDate);
+        } else {
+            initScroller(toSample(new DateTime().withDate(year, month, day)));
+        }
+    }
+
+    public void setSelectedDate(long mills) {
+        if (mills == 0) {
+            initScroller(mCurrentDate);
+        } else {
+            initScroller(toSample(new DateTime().withMillis(mills)));
+        }
+    }
+
     public void setSelectedDate(@Nullable DateTime dateTime) {
         if (dateTime == null) {
             initScroller(mCurrentDate);
@@ -179,7 +212,10 @@ public final class WeekScroller extends RecyclerView {
             public void onDateClicked(@NonNull DateTime dateTime) {
                 mLastSelected = dateTime;
                 if (getDateSelectListener() != null) {
-                    getDateSelectListener().onDateSelected(dateTime);
+                    getDateSelectListener().onDateSelected(dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth());
+                }
+                if (getDateTimeSelectListener() != null) {
+                    getDateTimeSelectListener().onDateTimeSelected(dateTime);
                 }
             }
         });
@@ -199,9 +235,19 @@ public final class WeekScroller extends RecyclerView {
             public void onBlockSnapped(int snapPosition) {
                 Log.d(TAG, "onBlockSnapped: " + snapPosition);
                 if (snapPosition == 0) {
-                    moveBackward();
+                    postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            moveBackward();
+                        }
+                    }, 50);
                 } else if (snapPosition == 14) {
-                    moveForward();
+                    postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            moveForward();
+                        }
+                    }, 50);
                 }
             }
         });
@@ -389,7 +435,17 @@ public final class WeekScroller extends RecyclerView {
     }
 
     public interface DateSelectListener {
-        void onDateSelected(@NonNull DateTime dateTime);
+        /**
+         * Notify selected date.
+         * @param year year.
+         * @param month month (1-12).
+         * @param day day.
+         */
+        void onDateSelected(int year, int month, int day);
+    }
+
+    public interface DateTimeSelectListener {
+        void onDateTimeSelected(@NonNull DateTime dateTime);
     }
 
     public interface DateRangeChangeListener {
