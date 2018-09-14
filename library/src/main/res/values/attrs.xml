@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="WeekScroller">
+        <attr name="todayBackground" format="reference" />
+        <attr name="todayBackgroundColor" format="color" />
+        <attr name="todayTextColor" format="color" />
+        <attr name="todayTextSize" format="dimension" />
+        <attr name="todayTextAppearance" format="reference" />
+
+        <attr name="selectedBackground" format="reference" />
+        <attr name="selectedBackgroundColor" format="color" />
+        <attr name="selectedTextColor" format="color" />
+        <attr name="selectedTextSize" format="dimension" />
+        <attr name="selectedTextAppearance" format="reference" />
+
+        <attr name="dayBackground" format="reference" />
+        <attr name="dayBackgroundColor" format="color" />
+        <attr name="dayTextColor" format="color" />
+        <attr name="dayTextSize" format="dimension" />
+        <attr name="dayTextAppearance" format="reference" />
+
+        <attr name="todayMarkEnabled" format="boolean" />
+        <attr name="startDayOfWeek" format="enum">
+            <enum name="monday" value="1" />
+            <enum name="tuesday" value="2" />
+            <enum name="wednesday" value="3" />
+            <enum name="thursday" value="4" />
+            <enum name="friday" value="5" />
+            <enum name="saturday" value="6" />
+            <enum name="sunday" value="7" />
+        </attr>
+    </declare-styleable>
+</resources>

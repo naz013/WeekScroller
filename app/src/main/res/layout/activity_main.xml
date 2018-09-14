@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <com.github.naz013.weekscroller.WeekScroller
+        android:id="@+id/week_scroller"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:dayTextColor="@android:color/black"
+        app:dayTextSize="12sp"
+        app:selectedBackground="@drawable/selected_bg"
+        app:selectedTextColor="@android:color/white"
+        app:selectedTextSize="20sp"
+        app:startDayOfWeek="monday"
+        app:todayBackground="@drawable/today_bg"
+        app:todayMarkEnabled="true"
+        app:todayTextColor="@android:color/white"
+        app:todayTextSize="17sp" />
+
+</LinearLayout>
